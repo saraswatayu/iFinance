@@ -67,7 +67,6 @@
 
                     <div class="form-group">
                         <button type="submit" style="width:100%;margin-bottom:10px" class="btn btn-primary">Login</button>
-                        <a href="{{ url('/register')}}"><input type="button" style="width:100%" class="btn btn-success" value="Register" placeholder="Password"></a>
                     </div>
                 </form>
             </div>

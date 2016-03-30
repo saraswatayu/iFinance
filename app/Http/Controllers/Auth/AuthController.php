@@ -52,7 +52,7 @@ class AuthController extends Controller
     }
 
     protected $redirectTo = '/dashboard';
-    protected $redirectPath = '/dashboard';
+    
     /**
      * Create a new user instance after a valid registration.
      *

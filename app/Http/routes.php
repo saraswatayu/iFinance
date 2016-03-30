@@ -10,23 +10,13 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-####### REGISTER #############
-Route::get('/register', function () {
-	return view('auth/register');
-});
-Route::post('/register', 'Auth\AuthController@postRegister');
-##############################
 
-####### LOG IN ###############
-Route::get('/login', function () {
-	return view('auth/login');
-});
-Route::post('/login', 'Auth\AuthController@postLogin');
-##############################
+Route::group(['middleware' => ['web']], function () {
 
-Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', 'MainController@home');
-    Route::get('/profile', 'MainController@profile');
+    Route::get('/', function () {
+        return view('dashboard');
+    })->middleware('auth');
+    
+    Route::auth();
+    
 });
-
-Route::get('/logout', 'Auth\AuthController@getLogout');
