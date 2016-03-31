@@ -16,8 +16,10 @@ class CreateTransactionsTable extends Migration
             $table->increments('id');
             $table->string('account_id');
             $table->string('email');
+            $table->string('category');
             $table->string('merchant');
             $table->float('price');
+            $table->dateTime('time');
             $table->timestamps();
         });
     }
