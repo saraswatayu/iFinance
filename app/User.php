@@ -25,11 +25,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-//    /**
-//     * Get all of the tasks for the user.
-//     */
-//    public function tasks()
-//    {
-//        return $this->hasMany(Task::class);
-//    }
+    /**
+     * Get all of the tasks for the user.
+     */
+    public function accounts()
+    {
+        return $this->hasMany(Account::class);
+    }
 }
