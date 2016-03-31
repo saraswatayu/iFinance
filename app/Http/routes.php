@@ -13,10 +13,15 @@
 
 Route::group(['middleware' => 'web'], function () {
     Route::get('/', function () {
-       return view('auth.login'); 
+        if (Auth::check())
+            return redirect('/dashboard'); 
+        else
+            return view('auth.login');
     });
 
     Route::get('/dashboard', 'MainController@index');
+    
+    Route::post('/account/{account}', 'MainController@select');
     
     Route::auth();
 });
