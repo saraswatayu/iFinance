@@ -7,24 +7,27 @@ use App\Http\Requests;
 
 use App\Account;
 use App\Repositories\AccountRepository;
+use App\Repositories\TransactionRepository;
 
 class MainController extends Controller
 {
     /**
      * The task repository instance.
      *
-     * @var TaskRepository
+     * @var AccountRepository
      */
     protected $accounts;
+    protected $transactions;
     
-    public function __construct(AccountRepository $accounts) {
+    public function __construct(AccountRepository $accounts, TransactionRepository $transactions) {
         $this->middleware('auth');
         
         $this->accounts = $accounts;
+        $this->transactions = $transactions;
     }
     
     /**
-     * Display a list of all of the user's task.
+     * Display a list of all of the user's accounts.
      *
      * @param  Request  $request
      * @return Response
@@ -33,6 +36,7 @@ class MainController extends Controller
     {
         return view('dashboard.index', [
             'accounts' => $this->accounts->forUser($request->user()),
+            'transactions' => $this->transactions->forAccounts($this->accounts->forUser($request->user())),
         ]);
     }
     

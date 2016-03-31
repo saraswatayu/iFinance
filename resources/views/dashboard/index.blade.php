@@ -13,10 +13,6 @@
 
                     <div class="panel-body">
                         <table class="table table-striped task-table">
-                            <thead>
-                                <th>Account</th>
-                                <th>&nbsp;</th>
-                            </thead>
                             <tbody>
                                 @foreach ($accounts as $account)
                                     <tr>
@@ -54,6 +50,18 @@
                         @if ($account->selected)
                             {{ $account->selected ? $account->name : "" }}
                         @endif
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">Transactions</div>
+
+                <div class="panel-body">
+                    @foreach ($transactions as $transaction)
+                        {{ $transaction->merchant }}
                     @endforeach
                 </div>
             </div>

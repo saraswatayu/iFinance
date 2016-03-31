@@ -18,6 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->string('email');
             $table->string('merchant');
             $table->float('price');
+            $table->dateTime('time');
             $table->timestamps();
         });
     }
