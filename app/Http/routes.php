@@ -11,12 +11,12 @@
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-
+Route::group(['middleware' => 'web'], function () {
     Route::get('/', function () {
-        return view('dashboard');
-    })->middleware('auth');
+       return view('auth.login'); 
+    });
+
+    Route::get('/dashboard', 'MainController@index');
     
     Route::auth();
-    
 });

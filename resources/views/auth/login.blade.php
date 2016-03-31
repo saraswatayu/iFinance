@@ -47,8 +47,10 @@
                 <div class="title">iFinance</div>
                 <form method="POST" action="{{ url('/login') }}">
                     {!! csrf_field() !!}
+                    
                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                         <input type="email" class="form-control" name="email" placeholder="Email" value="{{ old('email') }}">
+                        
                         @if ($errors->has('email'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('email') }}</strong>
@@ -58,6 +60,7 @@
 
                     <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                         <input type="password" class="form-control" name="password" placeholder="Password">
+                        
                         @if ($errors->has('password'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('password') }}</strong>

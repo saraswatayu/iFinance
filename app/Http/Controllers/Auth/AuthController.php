@@ -23,8 +23,12 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
-    protected $maxLoginAttempts = 4;
-    protected $lockoutTime = 60; 
+    /**
+     * Where to redirect users after login / registration.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new authentication controller instance.
@@ -33,7 +37,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'getLogout']);
+        $this->middleware('guest', ['except' => 'logout']);
     }
 
     /**
@@ -51,8 +55,6 @@ class AuthController extends Controller
         ]);
     }
 
-    protected $redirectTo = '/dashboard';
-    
     /**
      * Create a new user instance after a valid registration.
      *
@@ -61,13 +63,10 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        echo 'called';
-        $user = new User([
+        return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
-        $user->save();
-        return $user;
     }
 }

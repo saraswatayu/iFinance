@@ -11,11 +11,14 @@ class MainController extends Controller
         $this->middleware('auth');
     }
     
-	public function home(){
-		return view('home');
-	}
-    
-	public function profile(){
-		return view('profile');
-	}
+    /**
+     * Display a list of all of the user's task.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function index()
+    {
+        return view('dashboard.index');
+    }
 }
