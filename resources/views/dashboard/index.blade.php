@@ -35,9 +35,8 @@
                                 @foreach ($credit_cards as $account)
                                     <tr>
                                         <td class="table-text"><div>{{ $account->name }}</div></td>
-                                        <td class="table-text"><div>${{ $account->balance }}</div></td>
+                                        <td class="table-text"><div>${{ number_format($account->balance, 2) }}</div></td>
 
-                                        <!-- Task Delete Button -->
                                         <td>
                                             <form action="/account/{{ $account->id }}" method="POST">
                                                 {{ csrf_field() }}
@@ -68,9 +67,8 @@
                                 @foreach ($savings as $account)
                                     <tr>
                                         <td class="table-text"><div>{{ $account->name }}</div></td>
-                                        <td class="table-text"><div>${{ $account->balance }}</div></td>
+                                        <td class="table-text"><div>${{ number_format($account->balance, 2) }}</div></td>
 
-                                        <!-- Task Delete Button -->
                                         <td>
                                             <form action="/account/{{ $account->id }}" method="POST">
                                                 {{ csrf_field() }}
@@ -101,9 +99,8 @@
                                 @foreach ($loans as $account)
                                     <tr>
                                         <td class="table-text"><div>{{ $account->name }}</div></td>
-                                        <td class="table-text"><div>${{ $account->balance }}</div></td>
+                                        <td class="table-text"><div>${{ number_format($account->balance, 2) }}</div></td>
 
-                                        <!-- Task Delete Button -->
                                         <td>
                                             <form action="/account/{{ $account->id }}" method="POST">
                                                 {{ csrf_field() }}
@@ -131,48 +128,54 @@
         <div class="col-md-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Graph
+                    <h3 class="panel-title">Graph</h3>
                 </div>
 
                 <div class="panel-body">
-                    <h1>Selected Accounts</h1>
-                    @foreach ($accounts as $account)
-                        @if ($account->selected)
-                            {{ $account->selected ? $account->name : "" }}
-                        @endif
-                    @endforeach
+                    
                 </div>
             </div>
         
             <div class="panel panel-default">
-                <div class="panel-heading">Transactions</div>
-
-                <div class="panel-body">
-                    @if (count($transactions) > 0)
-                        <table class="table table-striped task-table">
-                            <thead>
-                                <tr>
-                                    <th>Merchant</th>
-                                    <th>Category</th>
-                                    <th>Price</th>
-                                    <th>Time</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($transactions as $transaction)
-                                    <tr>
-                                        <td class="table-text"><div>{{ $transaction->merchant }}</div></td>
-                                        <td class="table-text"><div>{{ $transaction->category }}</div></td>
-                                        <td class="table-text"><div>${{ $transaction->price }}</div></td>
-                                        <td class="table-text"><div>{{ $transaction->time }}</div></td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    @else
-                        No transactions found.
-                    @endif
+                <div class="panel-heading">
+                    <h3 class="panel-title">Transactions</h3>
                 </div>
+
+                @if (count($transactions) > 0)
+                    <table class="table table-striped task-table">
+                        <thead>
+                            <th class="warning">December 31, 2014</th>
+                            <th class="warning"></th>
+                            <th class="warning"></th>
+                            <th class="warning"></th>
+<!--                            <th class="warning"></th>-->
+                        </thead>
+                        <thead>
+                            <tr>
+<!--                                <th>Account</th>-->
+                                <th>Merchant</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($transactions as $transaction)
+                                <tr>
+<!--                                    <td class="table-text"><div>{{ $transaction->account->name }}</div></td>-->
+                                    <td class="table-text"><div>{{ $transaction->merchant }}</div></td>
+                                    <td class="table-text"><div>{{ $transaction->category }}</div></td>
+                                    <td class="table-text"><div>${{ number_format($transaction->price, 2) }}</div></td>
+                                    <td class="table-text"><div>{{ date_format($transaction->time, "H:i") }}</div></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <div class="panel-body">
+                        No transactions found.
+                    </div>
+                @endif
             </div>
         </div>
     </div>

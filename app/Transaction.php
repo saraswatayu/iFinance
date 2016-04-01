@@ -21,6 +21,7 @@ class Transaction extends Model
      */
     protected $casts = [
         'user_id' => 'int',
+        'time' => 'DateTime',
     ];
 
     /**
