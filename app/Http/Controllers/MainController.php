@@ -36,7 +36,7 @@ class MainController extends Controller
     {
         return view('dashboard.index', [
             'accounts' => $this->accounts->forUser($request->user()),
-            'transactions' => $this->transactions->forAccounts($this->accounts->forUser($request->user())),
+            'transactions' => $this->transactions->forAccounts($this->accounts->forUser($request->user()), 'time'),
         ]);
     }
     
