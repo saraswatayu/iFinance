@@ -13,7 +13,7 @@ class TransactionRepository
      * @param  Array<Account>  $accounts
      * @return Collection
      */
-    public function forAccounts($accounts)
+    public function forAccounts($accounts, $sort)
     {
         $account_ids = [];
         foreach ($accounts as $account) {
@@ -22,7 +22,7 @@ class TransactionRepository
         }
         
         return Transaction::whereIn('account_id', $account_ids)
-                    ->orderBy('time', 'asc')
+                    ->orderBy($sort, 'asc')
                     ->get();
     }
 }
