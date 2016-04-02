@@ -90,4 +90,22 @@ class MainController extends Controller
             return back();
         }
     }
+    
+    /**
+     * Remove an account.
+     *
+     * @param  Request  $request
+     * @param  Account  $account
+     * @return Response
+     */
+    public function remove(Request $request, Account $account)
+    {
+        $transactions = $this->transactions->forAccount($account);
+        foreach ($transactions as $transaction) {
+            $transaction->delete();
+        }
+        $account->delete();
+        
+        return redirect('/dashboard');
+    }
 }

@@ -13,6 +13,18 @@ class TransactionRepository
      * @param  Array<Account>  $accounts
      * @return Collection
      */
+    public function forAccount($account)
+    {   
+        return Transaction::where('account_id', $account->id)
+                    ->get();
+    }
+    
+    /**
+     * Get all of the tasks for a given account.
+     *
+     * @param  Array<Account>  $accounts
+     * @return Collection
+     */
     public function forAccounts($accounts, $sort)
     {
         $account_ids = [];

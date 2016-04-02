@@ -10,7 +10,7 @@
                 </div>
                 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="/add/account" enctype="multipart/form-data">
+                    <form class="form-horizontal" method="POST" action="/account/add" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         
                         <input type="file" name="csv" id="fileToUpload">
@@ -35,9 +35,7 @@
                 @if (count($accounts) > 0)
                     <table class="table table-hover">
                         <thead>
-                            <th class="warning">Credit Cards</th>
-                            <th class="warning"></th>
-                            <th class="warning"></th>
+                            <th class="warning" colspan="4">Credit Cards</th>
                         </thead>
                         <tbody>
                             <?php 
@@ -57,11 +55,21 @@
                             @if (count($credit_cards) > 0)
                                 @foreach ($credit_cards as $account)
                                     <tr>
-                                        <td class="table-text"><div>{{ $account->name }}</div></td>
-                                        <td class="table-text"><div>${{ number_format($account->balance, 2) }}</div></td>
+                                        <td width="1">
+                                            <form action="/account/remove/{{ $account->id }}" method="POST">
+                                                {{ csrf_field() }}
+                                                
+                                                <button type="submit" class="trash-icon">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                        
+                                        <td class="table-text" width="80%"><div>{{ $account->name }}</div></td>
+                                        <td class="table-text" width="10%"><div>${{ number_format($account->balance, 2) }}</div></td>
 
-                                        <td>
-                                            <form action="/account/{{ $account->id }}" method="POST">
+                                        <td width="1">
+                                            <form action="/account/select/{{ $account->id }}" method="POST">
                                                 {{ csrf_field() }}
 
                                                 @if ($account->selected)
@@ -75,25 +83,33 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td class="table-text">No credit cards found.</td>
+                                    <td class="table-text" colspan="4">No credit cards found.</td>
                                 </tr>
                             @endif
                         </tbody>
                         
                         <thead>
-                            <th class="warning">Savings</th>
-                            <th class="warning"></th>
-                            <th class="warning"></th>
+                            <th class="warning" colspan="4">Savings</th>
                         </thead>
                         <tbody>
                             @if (count($savings) > 0)
                                 @foreach ($savings as $account)
                                     <tr>
-                                        <td class="table-text"><div>{{ $account->name }}</div></td>
-                                        <td class="table-text"><div>${{ number_format($account->balance, 2) }}</div></td>
+                                        <td width="1">
+                                            <form action="/account/remove/{{ $account->id }}" method="POST">
+                                                {{ csrf_field() }}
+                                                
+                                                <button type="submit" class="trash-icon">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                        
+                                        <td class="table-text" width="80%"><div>{{ $account->name }}</div></td>
+                                        <td class="table-text" width="10%"><div>${{ number_format($account->balance, 2) }}</div></td>
 
-                                        <td>
-                                            <form action="/account/{{ $account->id }}" method="POST">
+                                        <td width="1">
+                                            <form action="/account/select/{{ $account->id }}" method="POST">
                                                 {{ csrf_field() }}
 
                                                 @if ($account->selected)
@@ -107,25 +123,33 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td class="table-text">No savings found.</td>
+                                    <td class="table-text" colspan="4">No savings found.</td>
                                 </tr>
                             @endif
                         </tbody>
                         
                         <thead>
-                            <th class="warning">Loans</th>
-                            <th class="warning"></th>
-                            <th class="warning"></th>
+                            <th class="warning" colspan="4">Loans</th>
                         </thead>
                         <tbody>
                             @if (count($loans) > 0)
                                 @foreach ($loans as $account)
                                     <tr>
-                                        <td class="table-text"><div>{{ $account->name }}</div></td>
-                                        <td class="table-text"><div>${{ number_format($account->balance, 2) }}</div></td>
+                                        <td width="1">
+                                            <form action="/account/remove/{{ $account->id }}" method="POST">
+                                                {{ csrf_field() }}
 
-                                        <td>
-                                            <form action="/account/{{ $account->id }}" method="POST">
+                                                <button type="submit" class="trash-icon">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                        
+                                        <td class="table-text" width="80%"><div>{{ $account->name }}</div></td>
+                                        <td class="table-text" width="10%"><div>${{ number_format($account->balance, 2) }}</div></td>
+
+                                        <td width="1">
+                                            <form action="/account/select/{{ $account->id }}" method="POST">
                                                 {{ csrf_field() }}
 
                                                 @if ($account->selected)
@@ -139,12 +163,22 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td class="table-text">No loans found.</td>
+                                    <td class="table-text" colspan="4">No loans found.</td>
                                 </tr>
                             @endif
                         </tbody>
                     </table>
                 @endif
+            </div>
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Budget</h3>
+                </div>
+                
+                <div class="panel-body">
+                    Budgets.
+                </div>
             </div>
         </div>
         

@@ -23,6 +23,13 @@
         .fa-btn {
             margin-right: 6px;
         }
+        
+        .trash-icon {
+            -webkit-appearance: none;
+            outline: none;
+            border: 0;
+            background: transparent;
+        }
     </style>
 </head>
 <body id="app-layout">
