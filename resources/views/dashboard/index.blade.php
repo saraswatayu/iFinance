@@ -6,6 +6,29 @@
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
+                    <h3 class="panel-title">Add Account</h3>
+                </div>
+                
+                <div class="panel-body">
+                    <form class="form-horizontal" method="POST" action="/add/account" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        
+                        <input type="file" name="csv" id="fileToUpload">
+                        <br>
+                        
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-6">
+                                <button type="submit" class="btn btn-default">
+                                    <i class="fa fa-btn fa-plus"></i>Add Account
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">
                     <h3 class="panel-title">Accounts</h3>
                 </div>
 
