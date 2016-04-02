@@ -12,6 +12,7 @@
 ## Default User
 
 Email: default@default.com
+
 Password: default
 
 ## Registering a New User
