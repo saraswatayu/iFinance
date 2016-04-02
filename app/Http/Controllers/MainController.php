@@ -5,7 +5,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
+use App\User;
 use App\Account;
+use App\Transaction;
 use App\Repositories\AccountRepository;
 use App\Repositories\TransactionRepository;
 
@@ -53,5 +55,39 @@ class MainController extends Controller
         $account->save();
         
         return redirect('/dashboard');
+    }
+    
+    /**
+     * Add an account.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function add(Request $request)
+    {   
+        $user = $request->user();
+        
+        $success = true;
+        $message = "Account import complete!";
+        
+        if (!file_exists($_FILES['csv']['tmp_name']) || !is_uploaded_file($_FILES['csv']['tmp_name'])) {
+            $success = false;
+            $message = 'Error: CSV file required.';
+        } else {
+            $csv = file($_FILES['csv']['tmp_name']);
+            $success = $user->importAccount($csv);
+        }
+
+        if ($success) {
+            $request->session()->flash('message', 'Import Succesful!'); 
+            $request->session()->flash('alert-class', 'alert-success');
+            
+            return redirect('/dashboard');
+        } else {
+            $request->session()->flash('message', 'Import Failed.'); 
+            $request->session()->flash('alert-class', 'alert-danger');
+            
+            return back();
+        }
     }
 }

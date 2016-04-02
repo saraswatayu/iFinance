@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\User;
+use App\Account;
 use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
