@@ -69,7 +69,10 @@
                     </div>
 
                     <div class="form-group">
-                        <button type="submit" style="width:100%;margin-bottom:10px" class="btn btn-primary">Login</button>
+                        <button type="submit" style="width:100%" class="btn btn-primary">Login</button>
+                    </div>
+                    <div class="form-group">
+                       <a href="/register"><input type="button" style="width:100%" class="btn btn-primary" value="Register"></a>
                     </div>
                 </form>
             </div>
