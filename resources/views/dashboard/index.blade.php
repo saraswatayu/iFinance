@@ -3,6 +3,15 @@
 @section('content')
 <div class="container">
     <div class="row">
+        @if(Session::has('message'))
+            <div class="alert {{ Session::get('alert-class', 'alert-info') }} alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ Session::get('message') }}
+            </div>
+        @endif
+    </div>
+    
+    <div class="row">
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -14,7 +23,8 @@
                         {{ csrf_field() }}
                         
                         <input type="file" name="csv" id="fileToUpload">
-                        <br>
+                        
+                        <hr/>
                         
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-6">
@@ -181,36 +191,65 @@
                     <div class="clearfix"></div>
                 </div>
                 
-                <div class="panel-body">
-                    @if (count($budgets) > 0)
-                        <?php
-                            $categoryTotals = [];
-                            foreach ($transactions as $transaction) {
-                                if (array_key_exists($transaction->category, $categoryTotals)) {
-                                    $categoryTotals[$transaction->category] += $transaction->price;
-                                } else {
-                                    $categoryTotals[$transaction->category] = $transaction->price;
-                                }
+                @if (count($budgets) > 0)
+                    <?php
+                        $categoryTotals = [];
+                        foreach ($all_transactions as $transaction) {
+                            if (array_key_exists($transaction->category, $categoryTotals)) {
+                                $categoryTotals[$transaction->category] += $transaction->price;
+                            } else {
+                                $categoryTotals[$transaction->category] = $transaction->price;
                             }
-                        ?>
-                    
-                        @foreach ($budgets as $budget)
-                            <?php
-                                if (!array_key_exists($budget->category, $categoryTotals)) {
-                                    $categoryTotals[$budget->category] = 0;
-                                }
-                            ?>
-                    
-                            {{ $budget->category }}
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="{{ $categoryTotals[$budget->category] / $budget->limit }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $categoryTotals[$budget->category] / $budget->limit }}%;">
-                                </div>
-                            </div>
-                        @endforeach
-                    @else
+                        }
+                    ?>
+
+                    <table class="table table-hover">
+                        <tbody>
+                            @foreach ($budgets as $budget)
+                                <?php
+                                    if (!array_key_exists($budget->category, $categoryTotals)) {
+                                        $categoryTotals[$budget->category] = 0;
+                                    }
+
+                                    $progressStyle = 'warning';
+                                    $overage = number_format($categoryTotals[$budget->category], 2) / number_format($budget->limit, 2);
+                                    if ($overage > 1) {
+                                        $progressStyle = 'danger';
+                                    } else if ($overage < 1) {
+                                        $progressStyle = 'success';
+                                    }
+                                ?>
+
+                                <tr>
+                                    <td width="1">
+                                        <form action="/budget/remove/{{ $budget->id }}" method="POST">
+                                            {{ csrf_field() }}
+
+                                            <button type="submit" class="trash-icon">
+                                                <i class="fa fa-trash-o"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+
+                                    <td>
+                                        <strong>{{ $budget->category }}</strong>
+
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-{{ $progressStyle }} progress-bar" role="progressbar" aria-valuenow="{{ $overage }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $overage * 100 }}%;">
+                                            </div>
+                                        </div>
+
+                                        <p>You've spent <span class="label label-{{ $progressStyle }}">${{ number_format($categoryTotals[$budget->category], 2) }}</span> of <strong>${{ number_format($budget->limit, 2) }}</strong>.</p>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <div class="panel-body">
                         No budgets found.
-                    @endif
-                </div>
+                    </div>
+                @endif
             </div>
             
             <!-- Budget Modal -->

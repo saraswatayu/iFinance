@@ -43,6 +43,7 @@ class MainController extends Controller
         return view('dashboard.index', [
             'accounts' => $this->accounts->forUser($request->user()),
             'transactions' => $this->transactions->forAccounts($this->accounts->forUser($request->user()), 'time'),
+            'all_transactions' => $this->transactions->allTransactions(),
             'budgets' => $this->budgets->forUser($request->user()),
         ]);
     }
@@ -77,19 +78,19 @@ class MainController extends Controller
         
         if (!file_exists($_FILES['csv']['tmp_name']) || !is_uploaded_file($_FILES['csv']['tmp_name'])) {
             $success = false;
-            $message = 'Error: CSV file required.';
+            $message = 'Please upload a valid .CSV file!';
         } else {
             $csv = file($_FILES['csv']['tmp_name']);
             $success = $user->importAccount($csv);
         }
 
         if ($success) {
-            $request->session()->flash('message', 'Import Succesful!'); 
+            $request->session()->flash('message', $message); 
             $request->session()->flash('alert-class', 'alert-success');
             
             return redirect('/dashboard');
         } else {
-            $request->session()->flash('message', 'Import Failed.'); 
+            $request->session()->flash('message', $message); 
             $request->session()->flash('alert-class', 'alert-danger');
             
             return back();
@@ -114,13 +115,66 @@ class MainController extends Controller
         return redirect('/dashboard');
     }
     
+    /**
+     * Add a budget.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
     public function addBudget(Request $request)
     {
-        $budget = new Budget;
-        $budget->email = $request->user()->email;
-        $budget->category = $request->category;
-        $budget->limit = $request->limit;
-        $budget->save();
+        $success = true;
+        $message = "Budget added successfully!";
+        
+        if (isset($request->category)) {
+            if (!$this->budgets->isUnique($request->category)) {
+                $success = false;
+                $message = "A budget for that category already exists!";
+            }
+        } else {
+            $success = false;
+            $message = "Please fill in all information.";
+        }
+        
+        if (isset($request->limit)) {
+            if (!is_numeric($request->limit)) {
+                $success = false;
+                $message = "Please enter a valid number.";
+            }
+        } else {
+            $success = false;
+            $message = "Pelase fill in all information.";
+        }
+        
+        if ($success) {
+            $budget = new Budget;
+            $budget->email = $request->user()->email;
+            $budget->category = $request->category;
+            $budget->limit = $request->limit;
+            $budget->save();
+            
+            $request->session()->flash('message', $message); 
+            $request->session()->flash('alert-class', 'alert-success');
+            
+            return redirect('/dashboard');
+        } else {
+            $request->session()->flash('message', $message); 
+            $request->session()->flash('alert-class', 'alert-danger');
+            
+            return back();
+        }
+    }
+    
+    /**
+     * Remove a budget.
+     *
+     * @param  Request  $request
+     * @param  Account  $account
+     * @return Response
+     */
+    public function removeBudget(Request $request, Budget $budget)
+    {
+        $budget->delete();
         
         return redirect('/dashboard');
     }

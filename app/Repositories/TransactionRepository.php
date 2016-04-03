@@ -37,4 +37,8 @@ class TransactionRepository
                     ->orderBy($sort, 'asc')
                     ->get();
     }
+    
+    public function allTransactions() {
+        return Transaction::get();
+    }
 }

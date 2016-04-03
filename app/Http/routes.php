@@ -26,6 +26,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/account/remove/{account}', 'MainController@removeAccount');
     
     Route::post('/budget/add', 'MainController@addBudget');
+    Route::post('/budget/remove/{budget}', 'MainController@removeBudget');
     
     Route::auth();
 });

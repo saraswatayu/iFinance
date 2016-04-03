@@ -21,4 +21,9 @@ class BudgetRepository
                     ->orderBy('category', 'asc')
                     ->get();
     }
+    
+    public function isUnique($category)
+    {
+        return count(Budget::where('category', $category)->get()) == 0;
+    }
 }
