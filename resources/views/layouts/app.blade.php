@@ -30,8 +30,18 @@
             border: 0;
             background: transparent;
         }
+        
+        .panel-heading h3 {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: normal;
+            width: 50%;
+            padding-top: 5px;
+        }
     </style>
 </head>
+    
 <body id="app-layout">
     <nav class="navbar navbar-default">
         <div class="container">

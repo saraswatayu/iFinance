@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use App\User;
+use App\Budget;
 use App\Account;
 use App\Transaction;
 use App\Repositories\AccountRepository;
 use App\Repositories\TransactionRepository;
+use App\Repositories\BudgetRepository;
 
 class MainController extends Controller
 {
@@ -20,12 +22,14 @@ class MainController extends Controller
      */
     protected $accounts;
     protected $transactions;
+    protected $budgets;
     
-    public function __construct(AccountRepository $accounts, TransactionRepository $transactions) {
+    public function __construct(AccountRepository $accounts, TransactionRepository $transactions, BudgetRepository $budgets) {
         $this->middleware('auth');
         
         $this->accounts = $accounts;
         $this->transactions = $transactions;
+        $this->budgets = $budgets;
     }
     
     /**
@@ -39,6 +43,7 @@ class MainController extends Controller
         return view('dashboard.index', [
             'accounts' => $this->accounts->forUser($request->user()),
             'transactions' => $this->transactions->forAccounts($this->accounts->forUser($request->user()), 'time'),
+            'budgets' => $this->budgets->forUser($request->user()),
         ]);
     }
     
@@ -49,7 +54,7 @@ class MainController extends Controller
      * @param  Account  $account
      * @return Response
      */
-    public function select(Request $request, Account $account)
+    public function selectAccount(Request $request, Account $account)
     {
         $account->selected = !$account->selected;
         $account->save();
@@ -63,7 +68,7 @@ class MainController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function add(Request $request)
+    public function addAccount(Request $request)
     {   
         $user = $request->user();
         
@@ -98,13 +103,24 @@ class MainController extends Controller
      * @param  Account  $account
      * @return Response
      */
-    public function remove(Request $request, Account $account)
+    public function removeAccount(Request $request, Account $account)
     {
         $transactions = $this->transactions->forAccount($account);
         foreach ($transactions as $transaction) {
             $transaction->delete();
         }
         $account->delete();
+        
+        return redirect('/dashboard');
+    }
+    
+    public function addBudget(Request $request)
+    {
+        $budget = new Budget;
+        $budget->email = $request->user()->email;
+        $budget->category = $request->category;
+        $budget->limit = $request->limit;
+        $budget->save();
         
         return redirect('/dashboard');
     }

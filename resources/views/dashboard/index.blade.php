@@ -171,13 +171,84 @@
                 @endif
             </div>
             
+            <!-- Budget -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Budget</h3>
+                    <h3 class="panel-title pull-left">Budget</h3>
+                    <button type="submit" class="btn btn-default pull-right" data-toggle="modal" data-target="#addBudgetModal">
+                        <i class="fa fa-btn fa-plus"></i>Add Budget
+                    </button>
+                    <div class="clearfix"></div>
                 </div>
                 
                 <div class="panel-body">
-                    Budgets.
+                    @if (count($budgets) > 0)
+                        <?php
+                            $categoryTotals = [];
+                            foreach ($transactions as $transaction) {
+                                if (array_key_exists($transaction->category, $categoryTotals)) {
+                                    $categoryTotals[$transaction->category] += $transaction->price;
+                                } else {
+                                    $categoryTotals[$transaction->category] = $transaction->price;
+                                }
+                            }
+                        ?>
+                    
+                        @foreach ($budgets as $budget)
+                            <?php
+                                if (!array_key_exists($budget->category, $categoryTotals)) {
+                                    $categoryTotals[$budget->category] = 0;
+                                }
+                            ?>
+                    
+                            {{ $budget->category }}
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="{{ $categoryTotals[$budget->category] / $budget->limit }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $categoryTotals[$budget->category] / $budget->limit }}%;">
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        No budgets found.
+                    @endif
+                </div>
+            </div>
+            
+            <!-- Budget Modal -->
+            <div class="modal fade" id="addBudgetModal" tabindex="-1" role="dialog" 
+                 aria-labelledby="addBudgetModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <button type="button" class="close" 
+                               data-dismiss="modal">
+                                   <span aria-hidden="true">&times;</span>
+                                   <span class="sr-only">Close</span>
+                            </button>
+                            <h4 class="modal-title" id="addBudgetModalLabel">
+                                Add Budget
+                            </h4>
+                        </div>
+
+                        <!-- Modal Body -->
+                        <div class="modal-body">
+                            <form method="POST" action="/budget/add">
+                                {{ csrf_field() }}
+
+                                <div class="form-group">
+                                    <label for="budget-category">Category</label>
+                                    <input type="text" class="form-control" name="category" id="budget-category" placeholder=""/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="budget-limit">Limit</label>
+                                    <input type="number" class="form-control" name="limit" id="budget-limit" placeholder=""/>
+                                </div>
+
+                                <button type="submit" class="btn btn-default">Add Budget</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -201,15 +272,10 @@
                 @if (count($transactions) > 0)
                     <table class="table table-striped task-table">
                         <thead>
-                            <th class="warning">December 31, 2014</th>
-                            <th class="warning"></th>
-                            <th class="warning"></th>
-                            <th class="warning"></th>
-<!--                            <th class="warning"></th>-->
+                            <th class="warning" colspan="4">December 31, 2014</th>
                         </thead>
                         <thead>
                             <tr>
-<!--                                <th>Account</th>-->
                                 <th>Merchant</th>
                                 <th>Category</th>
                                 <th>Price</th>
@@ -219,7 +285,6 @@
                         <tbody>
                             @foreach ($transactions as $transaction)
                                 <tr>
-<!--                                    <td class="table-text"><div>{{ $transaction->account->name }}</div></td>-->
                                     <td class="table-text"><div>{{ $transaction->merchant }}</div></td>
                                     <td class="table-text"><div>{{ $transaction->category }}</div></td>
                                     <td class="table-text"><div>${{ number_format($transaction->price, 2) }}</div></td>

@@ -43,9 +43,6 @@ class User extends Authenticatable
         $first_line = true;
         
         foreach ($csv as $line) {
-            Log::debug('LINE:');
-            Log::debug($line);
-            
             $values = [];
             $values = str_getcsv(trim($line));
 

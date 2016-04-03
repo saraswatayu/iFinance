@@ -21,9 +21,11 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('/dashboard', 'MainController@index');
     
-    Route::post('/account/select/{account}', 'MainController@select');
-    Route::post('/account/add', 'MainController@add');
-    Route::post('/account/remove/{account}', 'MainController@remove');
+    Route::post('/account/select/{account}', 'MainController@selectAccount');
+    Route::post('/account/add', 'MainController@addAccount');
+    Route::post('/account/remove/{account}', 'MainController@removeAccount');
+    
+    Route::post('/budget/add', 'MainController@addBudget');
     
     Route::auth();
 });
