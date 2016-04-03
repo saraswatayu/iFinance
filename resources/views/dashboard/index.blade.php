@@ -45,7 +45,7 @@
                 @if (count($accounts) > 0)
                     <table class="table table-hover">
                         <thead>
-                            <th class="warning" colspan="4">Credit Cards</th>
+                            <th colspan="4">Credit Cards</th>
                         </thead>
                         <tbody>
                             <?php 
@@ -99,7 +99,7 @@
                         </tbody>
                         
                         <thead>
-                            <th class="warning" colspan="4">Savings</th>
+                            <th colspan="4">Savings</th>
                         </thead>
                         <tbody>
                             @if (count($savings) > 0)
@@ -133,13 +133,13 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td class="table-text" colspan="4">No savings found.</td>
+                                    <td class="table-text" colspan="4">No savings accounts found.</td>
                                 </tr>
                             @endif
                         </tbody>
                         
                         <thead>
-                            <th class="warning" colspan="4">Loans</th>
+                            <th colspan="4">Loans</th>
                         </thead>
                         <tbody>
                             @if (count($loans) > 0)
@@ -184,7 +184,7 @@
             <!-- Budget -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title pull-left">Budget</h3>
+                    <h3 class="panel-title pull-left">Budgets</h3>
                     <button type="submit" class="btn btn-default pull-right" data-toggle="modal" data-target="#addBudgetModal">
                         <i class="fa fa-btn fa-plus"></i>Add Budget
                     </button>
