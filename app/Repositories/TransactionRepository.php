@@ -38,7 +38,20 @@ class TransactionRepository
                     ->get();
     }
     
-    public function allTransactions() {
-        return Transaction::get();
+    public function forAccountsPaginated($accounts)
+    {
+        $account_ids = [];
+        foreach ($accounts as $account) {
+            if ($account->selected)
+                $account_ids[] = $account->id;
+        }
+        
+        return Transaction::whereIn('account_id', $account_ids)->sorted()->paginate();
+    }
+    
+    public function monthTransactions() {
+        $from = date("Y-m-d", strtotime(date("Y-m-d", strtotime(date("Y-m-d")))."-1 month"));
+        
+        return Transaction::where('time', '>=', $from)->get();
     }
 }

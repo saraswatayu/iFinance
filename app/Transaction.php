@@ -4,9 +4,14 @@ namespace App;
 
 use App\Account;
 use Illuminate\Database\Eloquent\Model;
+use Gbrock\Table\Traits\Sortable;
 
 class Transaction extends Model
 {
+    use Sortable;
+    
+    protected $sortable = ['merchant', 'category', 'price', 'time'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -20,8 +25,7 @@ class Transaction extends Model
      * @var array
      */
     protected $casts = [
-        'user_id' => 'int',
-        'time' => 'DateTime',
+        'user_id' => 'int'
     ];
 
     /**

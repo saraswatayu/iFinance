@@ -14,7 +14,7 @@
 Route::group(['middleware' => 'web'], function () {
     Route::get('/', function () {
         if (Auth::check())
-            return redirect('/dashboard'); 
+            return redirect('/dashboard?sort=time&dir=desc'); 
         else
             return view('auth.login');
     });

@@ -13,6 +13,8 @@ use App\Repositories\AccountRepository;
 use App\Repositories\TransactionRepository;
 use App\Repositories\BudgetRepository;
 
+use Gbrock\Table\Table;
+
 class MainController extends Controller
 {
     /**
@@ -40,10 +42,20 @@ class MainController extends Controller
      */
     public function index(Request $request)
     {
+        $rows = $this->transactions->forAccountsPaginated($this->accounts->forUser($request->user()));
+        $table = Table::create($rows, ['merchant', 'category']);
+        $table->addColumn('price', 'Price', function($model) {
+            return '$'.number_format($model->price, 2);
+        });
+        $table->addColumn('time', 'Time', function($model) {
+            $date = date_create($model->time);
+            return date_format($date, "m/d/y");
+        });
+        
         return view('dashboard.index', [
             'accounts' => $this->accounts->forUser($request->user()),
-            'transactions' => $this->transactions->forAccounts($this->accounts->forUser($request->user()), 'time'),
-            'all_transactions' => $this->transactions->allTransactions(),
+            'table' => $table,
+            'month_transactions' => $this->transactions->monthTransactions(),
             'budgets' => $this->budgets->forUser($request->user()),
         ]);
     }
@@ -60,7 +72,7 @@ class MainController extends Controller
         $account->selected = !$account->selected;
         $account->save();
         
-        return redirect('/dashboard');
+        return redirect('/dashboard?sort=time&dir=desc');
     }
     
     /**
@@ -74,7 +86,6 @@ class MainController extends Controller
         $user = $request->user();
         
         $success = true;
-        $message = "Account import complete!";
         
         if (!file_exists($_FILES['csv']['tmp_name']) || !is_uploaded_file($_FILES['csv']['tmp_name'])) {
             $success = false;
@@ -85,11 +96,15 @@ class MainController extends Controller
         }
 
         if ($success) {
+            $message = "Account import complete!";
+            
             $request->session()->flash('message', $message); 
             $request->session()->flash('alert-class', 'alert-success');
             
-            return redirect('/dashboard');
+            return redirect('/dashboard?sort=time&dir=desc');
         } else {
+            $message = "Account import failed.";
+            
             $request->session()->flash('message', $message); 
             $request->session()->flash('alert-class', 'alert-danger');
             
@@ -112,7 +127,7 @@ class MainController extends Controller
         }
         $account->delete();
         
-        return redirect('/dashboard');
+        return redirect('/dashboard?sort=time&dir=desc');
     }
     
     /**
@@ -156,7 +171,7 @@ class MainController extends Controller
             $request->session()->flash('message', $message); 
             $request->session()->flash('alert-class', 'alert-success');
             
-            return redirect('/dashboard');
+            return redirect('/dashboard?sort=time&dir=desc');
         } else {
             $request->session()->flash('message', $message); 
             $request->session()->flash('alert-class', 'alert-danger');
@@ -176,6 +191,6 @@ class MainController extends Controller
     {
         $budget->delete();
         
-        return redirect('/dashboard');
+        return redirect('/dashboard?sort=time&dir=desc');
     }
 }

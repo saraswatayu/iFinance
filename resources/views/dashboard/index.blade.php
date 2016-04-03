@@ -184,7 +184,7 @@
             <!-- Budget -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title pull-left">Budgets</h3>
+                    <h3 class="panel-title pull-left">Monthly Budgets</h3>
                     <button type="submit" class="btn btn-default pull-right" data-toggle="modal" data-target="#addBudgetModal">
                         <i class="fa fa-btn fa-plus"></i>Add Budget
                     </button>
@@ -194,7 +194,7 @@
                 @if (count($budgets) > 0)
                     <?php
                         $categoryTotals = [];
-                        foreach ($all_transactions as $transaction) {
+                        foreach ($month_transactions as $transaction) {
                             if (array_key_exists($transaction->category, $categoryTotals)) {
                                 $categoryTotals[$transaction->category] += $transaction->price;
                             } else {
@@ -212,9 +212,10 @@
                                     }
 
                                     $progressStyle = 'warning';
-                                    $overage = number_format($categoryTotals[$budget->category], 2) / number_format($budget->limit, 2);
+                                    $overage = floatval($categoryTotals[$budget->category]) / floatval($budget->limit);
                                     if ($overage > 1) {
                                         $progressStyle = 'danger';
+                                        $overage = 1;
                                     } else if ($overage < 1) {
                                         $progressStyle = 'success';
                                     }
@@ -235,7 +236,7 @@
                                         <strong>{{ $budget->category }}</strong>
 
                                         <div class="progress">
-                                            <div class="progress-bar progress-bar-{{ $progressStyle }} progress-bar" role="progressbar" aria-valuenow="{{ $overage }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $overage * 100 }}%;">
+                                            <div class="progress-bar progress-bar-{{ $progressStyle }}" role="progressbar" aria-valuenow="{{ $overage }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $overage * 100 }}%;">
                                             </div>
                                         </div>
 
@@ -308,30 +309,8 @@
                     <h3 class="panel-title">Transactions</h3>
                 </div>
 
-                @if (count($transactions) > 0)
-                    <table class="table table-striped task-table">
-                        <thead>
-                            <th class="warning" colspan="4">December 31, 2014</th>
-                        </thead>
-                        <thead>
-                            <tr>
-                                <th>Merchant</th>
-                                <th>Category</th>
-                                <th>Price</th>
-                                <th>Time</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($transactions as $transaction)
-                                <tr>
-                                    <td class="table-text"><div>{{ $transaction->merchant }}</div></td>
-                                    <td class="table-text"><div>{{ $transaction->category }}</div></td>
-                                    <td class="table-text"><div>${{ number_format($transaction->price, 2) }}</div></td>
-                                    <td class="table-text"><div>{{ date_format($transaction->time, "H:i") }}</div></td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                @if (count($table->getRows()) > 0)
+                    {!! $table->render() !!}
                 @else
                     <div class="panel-body">
                         No transactions found.
