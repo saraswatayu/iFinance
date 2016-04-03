@@ -43,9 +43,6 @@ class User extends Authenticatable
         $first_line = true;
         
         foreach ($csv as $line) {
-            Log::debug('LINE:');
-            Log::debug($line);
-            
             $values = [];
             $values = str_getcsv(trim($line));
 
@@ -74,7 +71,7 @@ class User extends Authenticatable
                 $transaction->category = $category;
                 $transaction->merchant = $merchant;
                 $transaction->price = $price;
-                $transaction->time = date_create_from_format('Y-m-d H:i:s', $time);
+                $transaction->time = date_create($time);
                 $transaction->save();
             }
         }

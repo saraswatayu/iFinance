@@ -122,6 +122,8 @@ return [
 
     'providers' => [
 
+        'Gbrock\Table\Providers\TableServiceProvider',
+
         /*
          * Laravel Framework Service Providers...
          */
@@ -204,6 +206,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
+        'Table'      => 'Gbrock\Table\Facades\Table',
     ],
 
 ];

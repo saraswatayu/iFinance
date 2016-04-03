@@ -14,15 +14,19 @@
 Route::group(['middleware' => 'web'], function () {
     Route::get('/', function () {
         if (Auth::check())
-            return redirect('/dashboard'); 
+            return redirect('/dashboard?sort=time&dir=desc'); 
         else
             return view('auth.login');
     });
 
     Route::get('/dashboard', 'MainController@index');
     
-    Route::post('/account/{account}', 'MainController@select');
-    Route::post('/add/account', 'MainController@add');
+    Route::post('/account/select/{account}', 'MainController@selectAccount');
+    Route::post('/account/add', 'MainController@addAccount');
+    Route::post('/account/remove/{account}', 'MainController@removeAccount');
+    
+    Route::post('/budget/add', 'MainController@addBudget');
+    Route::post('/budget/remove/{budget}', 'MainController@removeBudget');
     
     Route::auth();
 });

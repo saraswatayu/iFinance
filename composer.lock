@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e547da049be5d52cd9f86047dc58c157",
-    "content-hash": "7e5ec16078cca572cee9052284564b55",
+    "hash": "ec6020cf534ea8613b2428aa74c3136b",
+    "content-hash": "970f747351296fc1c5a3211ed22e6f1d",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -162,6 +162,56 @@
             "time": "2015-11-06 14:35:42"
         },
         {
+            "name": "gbrock/laravel-table",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gbrock/laravel-table.git",
+                "reference": "de157db1842d99972ad7c8a9fe86135aaa5cfa41"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gbrock/laravel-table/zipball/de157db1842d99972ad7c8a9fe86135aaa5cfa41",
+                "reference": "de157db1842d99972ad7c8a9fe86135aaa5cfa41",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "5.*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.5.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Gbrock\\Table\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Greg Brock",
+                    "email": "contact@gbrock.com",
+                    "homepage": "http://gbrock.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Table functionality for Laravel models",
+            "keywords": [
+                "filtering",
+                "html",
+                "laravel",
+                "model",
+                "sorting",
+                "table"
+            ],
+            "time": "2015-10-16 19:12:06"
+        },
+        {
             "name": "jakub-onderka/php-console-color",
             "version": "0.1",
             "source": {
@@ -308,16 +358,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.2.27",
+            "version": "v5.2.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "ccda783ffa253ed27dd1d4b41dbbc95e76e48a2a"
+                "reference": "e3d644eb131f18c5f3d28ff7bc678bc797091f20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/ccda783ffa253ed27dd1d4b41dbbc95e76e48a2a",
-                "reference": "ccda783ffa253ed27dd1d4b41dbbc95e76e48a2a",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/e3d644eb131f18c5f3d28ff7bc678bc797091f20",
+                "reference": "e3d644eb131f18c5f3d28ff7bc678bc797091f20",
                 "shasum": ""
             },
             "require": {
@@ -432,7 +482,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2016-03-29 13:32:58"
+            "time": "2016-04-03 01:43:55"
         },
         {
             "name": "league/flysystem",
@@ -519,16 +569,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.18.1",
+            "version": "1.18.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "a5f2734e8c16f3aa21b3da09715d10e15b4d2d45"
+                "reference": "064b38c16790249488e7a8b987acf1c9d7383c09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/a5f2734e8c16f3aa21b3da09715d10e15b4d2d45",
-                "reference": "a5f2734e8c16f3aa21b3da09715d10e15b4d2d45",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/064b38c16790249488e7a8b987acf1c9d7383c09",
+                "reference": "064b38c16790249488e7a8b987acf1c9d7383c09",
                 "shasum": ""
             },
             "require": {
@@ -543,13 +593,13 @@
                 "doctrine/couchdb": "~1.0@dev",
                 "graylog2/gelf-php": "~1.0",
                 "jakub-onderka/php-parallel-lint": "0.9",
+                "php-amqplib/php-amqplib": "~2.4",
                 "php-console/php-console": "^3.1.3",
                 "phpunit/phpunit": "~4.5",
                 "phpunit/phpunit-mock-objects": "2.3.0",
                 "raven/raven": "^0.13",
                 "ruflin/elastica": ">=0.90 <3.0",
-                "swiftmailer/swiftmailer": "~5.3",
-                "videlalvaro/php-amqplib": "~2.4"
+                "swiftmailer/swiftmailer": "~5.3"
             },
             "suggest": {
                 "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
@@ -558,11 +608,11 @@
                 "ext-mongo": "Allow sending log messages to a MongoDB server",
                 "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
                 "mongodb/mongodb": "Allow sending log messages to a MongoDB server via PHP Driver",
+                "php-amqplib/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib",
                 "php-console/php-console": "Allow sending log messages to Google Chrome",
                 "raven/raven": "Allow sending log messages to a Sentry server",
                 "rollbar/rollbar": "Allow sending log messages to Rollbar",
-                "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
-                "videlalvaro/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib"
+                "ruflin/elastica": "Allow sending log messages to an Elastic Search server"
             },
             "type": "library",
             "extra": {
@@ -593,7 +643,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2016-03-13 16:08:35"
+            "time": "2016-04-02 13:12:58"
         },
         {
             "name": "mtdowling/cron-expression",
@@ -3119,7 +3169,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "gbrock/laravel-table": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
