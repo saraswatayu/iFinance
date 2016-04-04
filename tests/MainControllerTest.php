@@ -1,7 +1,8 @@
 <?php
 class MainControllerTest extends PHPUnit_Framework_TestCase {
-    
+
     protected $accounts = null
+    protected $budgets = null
 
     public function testShouldNotHaveAnyAccountsYetInIntitialState() {
         $this->assertEquals(0, count($this->accounts));
