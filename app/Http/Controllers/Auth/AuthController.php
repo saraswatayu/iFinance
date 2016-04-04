@@ -22,6 +22,8 @@ class AuthController extends Controller
     */
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+    protected $maxLoginAttempts= 4;
+    protected $lockoutTime = 60;
 
     /**
      * Where to redirect users after login / registration.
