@@ -5,11 +5,11 @@ Feature: Login
 
     Scenario: Loading the Login Page
         Given I am on "http://localhost:8000"
-        Then I should see "iFinance"
+        Then I should see "hi"
 
     Scenario: Successfully Logging In to Program
     	Given I am on "http://localhost:8000"
-    	And I fill in "email" with "default@default.com"
+    	And I fill in "emailInput" with "default@default.com"
     	And I fill in "password" with "default"
     	And I press "Login"
     	Then I should be on "http://localhost:8000/dashboard"
