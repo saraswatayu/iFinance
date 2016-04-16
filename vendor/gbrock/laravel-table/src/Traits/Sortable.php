@@ -92,7 +92,7 @@ trait Sortable {
         }
 
         // Otherwise return the primary key
-        return $this->getKeyName();
+        return 'time';
     }
 
     /**

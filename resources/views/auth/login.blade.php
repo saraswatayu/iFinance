@@ -49,7 +49,7 @@
                     {!! csrf_field() !!}
                     
                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                        <input type="email" class="form-control" id="emailInput" name = "emailInput" placeholder="Email" value="{{ old('email') }}">
+                        <input type="email" class="form-control" id="email" name = "email" placeholder="Email" value="{{ old('email') }}">
                         
                         
                         @if ($errors->has('email'))
