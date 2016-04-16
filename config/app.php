@@ -206,7 +206,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
-        'Table'      => 'Gbrock\Table\Facades\Table',
+        'Table'     => 'Gbrock\Table\Facades\Table',
     ],
 
 ];

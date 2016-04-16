@@ -4,16 +4,9 @@
 
 ## Usage
 
-<<<<<<< HEAD
 1. Navigate to the project directory in terminal.
 2. Use the command `php artisan serve` to start the web server.
 3. Point your web browser to `http://localhost:8000/` to get started!
-=======
-1. Create a new database with the name `iFinance`.
-2. Navigate to the project directory in terminal.
-4. Use the command `php artisan serve` to start the web server.
-5. Point your web browser to `http://localhost:8000/` to get started!
->>>>>>> origin/master
 
 ## Default User
 
