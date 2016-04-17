@@ -300,7 +300,8 @@
                 </div>
 
                 <div class="panel-body">
-                    
+                    <div id="line-chart"></div>
+                    @linechart('Temps', 'line-chart')
                 </div>
             </div>
         

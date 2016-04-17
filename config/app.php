@@ -123,6 +123,7 @@ return [
     'providers' => [
 
         'Gbrock\Table\Providers\TableServiceProvider',
+        'Khill\Lavacharts\Laravel\LavachartsServiceProvider',
 
         /*
          * Laravel Framework Service Providers...

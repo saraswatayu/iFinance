@@ -34,6 +34,7 @@ return array(
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'League\\Flysystem\\' => array($vendorDir . '/league/flysystem/src'),
     'Laracasts\\Behat\\' => array($vendorDir . '/laracasts/behat-laravel-extension/src'),
+    'Khill\\Lavacharts\\' => array($vendorDir . '/khill/lavacharts/src'),
     'Illuminate\\' => array($vendorDir . '/laravel/framework/src/Illuminate'),
     'Gbrock\\Table\\' => array($vendorDir . '/gbrock/laravel-table/src'),
     'Faker\\' => array($vendorDir . '/fzaninotto/faker/src/Faker'),
