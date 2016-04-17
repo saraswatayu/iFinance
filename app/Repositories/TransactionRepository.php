@@ -54,4 +54,14 @@ class TransactionRepository
         
         return Transaction::where('time', '>=', $from)->get();
     }
+    
+    public function dailyTransactionTotals($account, $time) {
+        $from = date("Y-m-d", strtotime(date("Y-m-d", strtotime(date("Y-m-d")))."-$time day"));
+        $transactions = Transaction::where('time', '>=', $from)->get();
+        
+        $dailyTotals = [];
+        for ($x = 0; $x <= $time; $x++) {
+            
+        }
+    }
 }

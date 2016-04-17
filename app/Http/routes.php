@@ -18,6 +18,11 @@ Route::group(['middleware' => 'web'], function () {
         else
             return view('auth.login');
     });
+    
+    Route::get('/logout', function() {
+        Auth::logout();
+        return redirect('/');
+    });
 
     Route::get('/dashboard', 'MainController@index');
     
