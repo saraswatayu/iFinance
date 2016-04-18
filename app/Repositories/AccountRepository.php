@@ -19,4 +19,12 @@ class AccountRepository
                     ->orderBy('name', 'asc')
                     ->get();
     }
+    
+    public function selectedForUser(User $user) 
+    {
+        return Account::where('email', $user->email)
+                    ->where('selected', true)
+                    ->orderBy('name', 'asc')
+                    ->get();
+    }
 }
