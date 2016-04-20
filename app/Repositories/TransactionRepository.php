@@ -55,13 +55,30 @@ class TransactionRepository
         return Transaction::where('time', '>=', $from)->get();
     }
     
-    public function dailyTransactionTotals($account, $time) {
-        $from = date("Y-m-d", strtotime(date("Y-m-d", strtotime(date("Y-m-d")))."-$time day"));
-        $transactions = Transaction::where('time', '>=', $from)->get();
+    public function previousTransactions($account, $time) {        
+        $totals = array();
         
-        $dailyTotals = [];
-        for ($x = 0; $x <= $time; $x++) {
-            
+        for ($i = $time; $i >= 0; $i--) {
+            $date = date("Y-m-d", strtotime(date("Y-m-d", strtotime(date("Y-m-d")))."-".$i." days"));
+            $totals[$date] = 0;
         }
+        
+        $from = date("Y-m-d", strtotime(date("Y-m-d", strtotime(date("Y-m-d")))."-".$time." days"));
+        $transactions = Transaction::where('time', '>=', $from)->get();
+        for ($i = $time; $i >= 0; $i--) {    
+            $transaction = $transactions[$i];
+            
+            $date = date("Y-m-d", strtotime($transaction->time));
+            $totals[$date] += floatval($transaction->price);
+        }
+
+        for ($i = $time - 1; $i >= 0; $i--) {    
+            $date = date("Y-m-d", strtotime(date("Y-m-d", strtotime(date("Y-m-d")))."-".$i." days"));
+            $pdate = date("Y-m-d", strtotime(date("Y-m-d", strtotime(date("Y-m-d")))."-".($i+1)." days"));
+            $totals[$date] += $totals[$pdate];
+        }
+
+        
+        return $totals;
     }
 }

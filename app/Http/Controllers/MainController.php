@@ -55,24 +55,37 @@ class MainController extends Controller
             return date_format($date, "m/d/y");
         });
         
-        // line chart
-        $temperatures = \Lava::DataTable();
-        $temperatures->addDateColumn('Date');
+        // LINE CHART
+        $days = 90;
+        
+        $totals = \Lava::DataTable();
+        $totals->addDateColumn('Date');
 
+        // selected accounts
         $selected = $this->accounts->selectedForUser($request->user());
         foreach ($selected as $account) {
-            $temperatures->addNumberColumn($account->name);
+            $totals->addNumberColumn($account->name);
         }
 
-        for ($i = 0; $i < 90; $i++) {
+        $dailyTotals = array();
+        foreach ($selected as $account) {
+             $dailyTotals[] = $this->transactions->previousTransactions($account, $days);
+        }
+        
+        for ($i = $days; $i >= 0; $i--) {
             $d = date("Y-m-d", strtotime(date("Y-m-d", strtotime(date("Y-m-d")))."-".$i." days"));
             
-            $row = [$d, 64];
-            $temperatures->addRow($row);
+            $row = array();
+            $row[] = $d;
+            foreach ($dailyTotals as $daily) {
+                $row[] = $daily[$d];
+            }
+            
+            $totals->addRow($row);   
         }
 
-        \Lava::LineChart('Temps', $temperatures, [
-            'title' => 'Weather in October',
+        \Lava::LineChart('Monthly Reports', $totals, [
+            'title' => 'Monthly Reports',
             'hAxis' => ['title' => 'Date'],
             'vAxis' => ['title' => 'Balance ($)']
         ]);
