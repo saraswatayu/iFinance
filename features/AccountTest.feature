@@ -4,18 +4,18 @@ Feature: Add Account
     I want to add my bank accounts to the program
 
     Scenario: Invalid Account Upload
-    	Given that I am on the homepage
-    	And I attach the file "invalidFile.png" to "Choose File"
-    	And I press "Add Account"
-    	Then I should see "Account import failed."
+        Given I am logged in
+    	And I attach my file "invalidFile.png" to the "Choose File" section
+    	And I press "Add Account" 
+        Then my account import should fail
 
 	Scenario: Valid Account Upload
-		Given that I am on the homepage
-    	And I attach the file "validFile.csv" to "Choose File"
+        Given I am logged in
+        And I attach my file "validFile.png" to the "Choose File" section
     	And I press "Add Account"
     	Then the number of items in the "transactions" field should increase by at least one
 
     Scenario: Hiding an Account's Transactions
-    	Given that I am on the homepage
+        Given I am logged in
     	And I uncheck the "visible" checkbox for the "American Express" account
     	Then the number of items in the "transactions" field should decrease by at least one

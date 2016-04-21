@@ -25,6 +25,6 @@ Feature: Login
     Scenario: Four Incorrect Login Attempts
         Given I am on "http://localhost:8000"
         And I try to use incorrect login information four times
-        Then I should see "Too many login attempts. Please try again in 60 seconds."
+        Then I should be told to try again in 60 seconds
 
         
