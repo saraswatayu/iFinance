@@ -17,6 +17,9 @@ use Gbrock\Table\Table;
 
 use Khill\Lavacharts\Lavacharts;
 
+use Session;
+use Input;
+
 class MainController extends Controller
 {
     /**
@@ -56,7 +59,8 @@ class MainController extends Controller
         });
         
         // LINE CHART
-        $days = 90;
+        $startDate = strtotime(Input::get('start', date("Y-M-d")));
+        $days = Input::get('days', 90);
         
         $totals = \Lava::DataTable();
         $totals->addDateColumn('Date');
@@ -69,11 +73,11 @@ class MainController extends Controller
 
         $dailyTotals = array();
         foreach ($selected as $account) {
-             $dailyTotals[] = $this->transactions->previousTransactions($account, $days);
+            $dailyTotals[] = $this->transactions->previousTransactionsBetweenDates($account, $startDate, $days);
         }
         
         for ($i = $days; $i >= 0; $i--) {
-            $d = date("Y-m-d", strtotime(date("Y-m-d", strtotime(date("Y-m-d")))."-".$i." days"));
+            $d = date("Y-m-d", strtotime('-'.$i.' days', $startDate));
             
             $row = array();
             $row[] = $d;
@@ -87,7 +91,7 @@ class MainController extends Controller
         \Lava::LineChart('Monthly Reports', $totals, [
             'title' => 'Monthly Reports',
             'hAxis' => ['title' => 'Date'],
-            'vAxis' => ['title' => 'Balance ($)']
+            'vAxis' => ['title' => 'Spending ($)']
         ]);
         
         return view('dashboard.index', [
@@ -229,6 +233,13 @@ class MainController extends Controller
     {
         $budget->delete();
         
+        return redirect('/dashboard?sort=time&dir=desc');
+    }
+    
+    public function setDates(Request $request) {
+        Session::put('startDate', $request->startDate);
+        Session::put('time', $request->days);
+
         return redirect('/dashboard?sort=time&dir=desc');
     }
 }

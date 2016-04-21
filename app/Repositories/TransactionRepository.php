@@ -81,4 +81,34 @@ class TransactionRepository
         
         return $totals;
     }
+    
+    public function previousTransactionsBetweenDates($account, $startDate, $time) {        
+        $totals = array();
+        
+        for ($i = $time; $i >= 0; $i--) {
+            $date = date("Y-m-d", strtotime('-'.$i.' days', $startDate));
+            $totals[$date] = 0;
+        }
+        
+        $from = date("Y-m-d", strtotime('-'.$time.' days', $startDate));
+        $to = date("Y-m-d", $startDate);
+        $transactions = Transaction::where('time', '>=', $from)->where('time', '<=', $to)->get();
+        for ($i = $time; $i >= 0; $i--) {   
+            if (isset($transactions[$i])) {
+                $transaction = $transactions[$i];
+
+                $date = date("Y-m-d", strtotime($transaction->time));
+                $totals[$date] += floatval($transaction->price);
+            }
+        }
+
+        for ($i = $time - 1; $i >= 0; $i--) {    
+            $date = date("Y-m-d", strtotime('-'.$i.' days', $startDate));
+            $pdate = date("Y-m-d", strtotime('-'.($i+1).' days', $startDate));
+            $totals[$date] += $totals[$pdate];
+        }
+
+        
+        return $totals;
+    }
 }

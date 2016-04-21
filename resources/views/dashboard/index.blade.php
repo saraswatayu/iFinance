@@ -300,15 +300,19 @@
                 </div>
 
                 <div class="panel-body">
-                    <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
-                        <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
-                        <span></span> <b class="caret"></b>
+                    <div class="row">
+                        <div class="col-md-7"></div>
+                        <div class="col-md-5">
+                            <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                                <span></span> <b class="caret"></b>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <br/>
-                    <br/>
-                    <div id="line-chart"></div>
-                    @linechart('Monthly Reports', 'line-chart')
+                    <div class="row">
+                        <div id="line-chart"></div>
+                        @linechart('Monthly Reports', 'line-chart')
+                    </div>
                 </div>
             </div>
         

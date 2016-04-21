@@ -25,6 +25,7 @@ Route::group(['middleware' => 'web'], function () {
     });
 
     Route::get('/dashboard', 'MainController@index');
+    Route::get('/dates/{startDate}/{days}', 'MainController@setDates');
     
     Route::post('/account/select/{account}', 'MainController@selectAccount');
     Route::post('/account/add', 'MainController@addAccount');
