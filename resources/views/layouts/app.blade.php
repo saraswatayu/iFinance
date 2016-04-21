@@ -128,7 +128,7 @@
     </script>
     
     <!-- Include Required Prerequisites -->
-    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+<!--    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>-->
     <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.css" />
 
@@ -148,6 +148,11 @@
                 cb(moment(start, 'Y-M-D').subtract(getUrlVars()['days'], 'days'), moment(start, 'Y-M-D'));
             } else {
                 cb(moment().subtract(90, 'days'), moment());
+            }
+            
+            var showModal = getUrlVars()['showModal'];
+            if (showModal) {
+                $('#budgetHistoryModal').modal('show');
             }
 
             $('#reportrange').daterangepicker({

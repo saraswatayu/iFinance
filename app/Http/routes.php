@@ -31,6 +31,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/account/add', 'MainController@addAccount');
     Route::post('/account/remove/{account}', 'MainController@removeAccount');
     
+    Route::post('/history/{category}', 'MainController@showHistory');
+    
     Route::post('/budget/add', 'MainController@addBudget');
     Route::post('/budget/remove/{budget}', 'MainController@removeBudget');
     

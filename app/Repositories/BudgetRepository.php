@@ -22,6 +22,11 @@ class BudgetRepository
                     ->get();
     }
     
+    public function forCategory($category)
+    {
+        return Budget::where('category', $category)->first();
+    }
+    
     public function isUnique($category)
     {
         return count(Budget::where('category', $category)->get()) == 0;

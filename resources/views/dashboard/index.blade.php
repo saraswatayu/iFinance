@@ -221,13 +221,22 @@
                                     }
                                 ?>
 
-                                <tr>
+                                <tr >
                                     <td width="1">
                                         <form action="/budget/remove/{{ $budget->id }}" method="POST">
                                             {{ csrf_field() }}
 
                                             <button type="submit" class="trash-icon">
                                                 <i class="fa fa-trash-o"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td width="1">
+                                        <form action="/history/{{ $budget->category }}" method="POST">
+                                            {{ csrf_field() }}
+
+                                            <button type="submit" class="trash-icon">
+                                                <i class="fa fa-line-chart"></i>
                                             </button>
                                         </form>
                                     </td>
@@ -287,6 +296,63 @@
 
                                 <button type="submit" class="btn btn-default">Add Budget</button>
                             </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Budget History Modal -->
+            <div class="modal fade" id="budgetHistoryModal" tabindex="-1" role="dialog" 
+                 aria-labelledby="budgetHistoryModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <button type="button" class="close" 
+                               data-dismiss="modal">
+                                   <span aria-hidden="true">&times;</span>
+                                   <span class="sr-only">Close</span>
+                            </button>
+                            <h4 class="modal-title" id="budgetHistoryModalLabel">
+                                Budget History
+                            </h4>
+                        </div>
+
+                        <!-- Modal Body -->
+                        <div class="modal-body">
+                            <?php $month = 0; ?>
+                            @foreach ($historicTotals as $total)
+                                <?php
+                                    $budgetProgressStyle = 'warning';
+                                    $budgetOverage = floatval($total) / floatval($historicLimit);
+                                    if ($budgetOverage > 1) {
+                                        $budgetProgressStyle = 'danger';
+                                        $overage = 1;
+                                    } else if ($budgetOverage < 1) {
+                                        $budgetProgressStyle = 'success';
+                                    }
+                                ?>
+
+                                <tr>
+                                    <td>
+                                        <strong>
+                                        <?php
+                                            $firstDay = date("F Y", strtotime(date("Y-m-d", strtotime(date("Y-m-d")))."-".$month." month"));
+                                            echo $firstDay;
+                                        ?>
+                                        </strong>
+
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-{{ $budgetProgressStyle }}" role="progressbar" aria-valuenow="{{ $budgetOverage }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $budgetOverage * 100 }}%;">
+                                            </div>
+                                        </div>
+
+                                        <p>You spent <span class="label label-{{ $budgetProgressStyle }}">${{ number_format($total, 2) }}</span> of <strong>${{ number_format($historicLimit, 2) }}</strong>.</p>
+                                    </td>
+                                </tr>
+                                <?php $month += 1; ?>
+                            @endforeach
                         </div>
                     </div>
                 </div>

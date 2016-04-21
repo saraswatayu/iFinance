@@ -50,9 +50,29 @@ class TransactionRepository
     }
     
     public function monthTransactions() {
-        $from = date("Y-m-d", strtotime(date("Y-m-d", strtotime(date("Y-m-d")))."-1 month"));
+        $from = date('Y-m-01');
         
         return Transaction::where('time', '>=', $from)->get();
+    }
+    
+    public function monthlyTotalsForCategory($category) {
+        $totalMonths = 12;
+        $totals = array();
+        
+        for ($i = $totalMonths; $i >= 0; $i--) {
+            $start = date("Y-m-01", strtotime(date("Y-m-d", strtotime(date("Y-m-d")))."-".$i." month"));
+            $end = date("Y-m-t", strtotime(date("Y-m-d", strtotime(date("Y-m-d")))."-".$i." month"));
+            
+            $transactions = Transaction::where('time', '>=', $start)->where('time', '<=', $end)->where('category', $category)->get();
+            $ttotal = 0;
+            foreach ($transactions as $transaction) {
+                $ttotal += floatval($transaction->price);
+            }
+            $totals[] = $ttotal;
+        }
+        
+        $totals = array_reverse($totals);
+        return $totals;
     }
     
     public function previousTransactions($account, $time) {        

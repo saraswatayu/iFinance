@@ -87,9 +87,13 @@ class MainController extends Controller
             
             $totals->addRow($row);   
         }
+        
+        $historyCategory = Input::get('history');
+        $history = $this->transactions->monthlyTotalsForCategory($historyCategory);
+        $historicalBudget = $this->budgets->forCategory($historyCategory);
+        $historicalLimit = $historicalBudget ? $historicalBudget->limit : 1;
 
         \Lava::LineChart('Monthly Reports', $totals, [
-            'title' => 'Monthly Reports',
             'hAxis' => ['title' => 'Date'],
             'vAxis' => ['title' => 'Spending ($)']
         ]);
@@ -99,6 +103,8 @@ class MainController extends Controller
             'table' => $table,
             'month_transactions' => $this->transactions->monthTransactions(),
             'budgets' => $this->budgets->forUser($request->user()),
+            'historicTotals' => $history,
+            'historicLimit' => $historicalLimit,
         ]);
     }
     
@@ -220,6 +226,11 @@ class MainController extends Controller
             
             return back();
         }
+    }
+    
+    public function showHistory(Request $request, $category)
+    {
+        return redirect('/dashboard?history='.$category.'&showModal=true');
     }
     
     /**
