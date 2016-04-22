@@ -50,18 +50,85 @@ class TransactionRepository
     }
     
     public function monthTransactions() {
-        $from = date("Y-m-d", strtotime(date("Y-m-d", strtotime(date("Y-m-d")))."-1 month"));
+        $from = date('Y-m-01');
         
         return Transaction::where('time', '>=', $from)->get();
     }
     
-    public function dailyTransactionTotals($account, $time) {
-        $from = date("Y-m-d", strtotime(date("Y-m-d", strtotime(date("Y-m-d")))."-$time day"));
-        $transactions = Transaction::where('time', '>=', $from)->get();
+    public function monthlyTotalsForCategory($category) {
+        $totalMonths = 12;
+        $totals = array();
         
-        $dailyTotals = [];
-        for ($x = 0; $x <= $time; $x++) {
+        for ($i = $totalMonths; $i >= 0; $i--) {
+            $start = date("Y-m-01", strtotime(date("Y-m-d", strtotime(date("Y-m-d")))."-".$i." month"));
+            $end = date("Y-m-t", strtotime(date("Y-m-d", strtotime(date("Y-m-d")))."-".$i." month"));
             
+            $transactions = Transaction::where('time', '>=', $start)->where('time', '<=', $end)->where('category', $category)->get();
+            $ttotal = 0;
+            foreach ($transactions as $transaction) {
+                $ttotal += floatval($transaction->price);
+            }
+            $totals[] = $ttotal;
         }
+        
+        $totals = array_reverse($totals);
+        return $totals;
+    }
+    
+    public function previousTransactions($account, $time) {        
+        $totals = array();
+        
+        for ($i = $time; $i >= 0; $i--) {
+            $date = date("Y-m-d", strtotime(date("Y-m-d", strtotime(date("Y-m-d")))."-".$i." days"));
+            $totals[$date] = 0;
+        }
+        
+        $from = date("Y-m-d", strtotime(date("Y-m-d", strtotime(date("Y-m-d")))."-".$time." days"));
+        $transactions = Transaction::where('time', '>=', $from)->get();
+        for ($i = $time; $i >= 0; $i--) {    
+            $transaction = $transactions[$i];
+            
+            $date = date("Y-m-d", strtotime($transaction->time));
+            $totals[$date] += floatval($transaction->price);
+        }
+
+        for ($i = $time - 1; $i >= 0; $i--) {    
+            $date = date("Y-m-d", strtotime(date("Y-m-d", strtotime(date("Y-m-d")))."-".$i." days"));
+            $pdate = date("Y-m-d", strtotime(date("Y-m-d", strtotime(date("Y-m-d")))."-".($i+1)." days"));
+            $totals[$date] += $totals[$pdate];
+        }
+
+        
+        return $totals;
+    }
+    
+    public function previousTransactionsBetweenDates($account, $startDate, $time) {        
+        $totals = array();
+        
+        for ($i = $time; $i >= 0; $i--) {
+            $date = date("Y-m-d", strtotime('-'.$i.' days', $startDate));
+            $totals[$date] = 0;
+        }
+        
+        $from = date("Y-m-d", strtotime('-'.$time.' days', $startDate));
+        $to = date("Y-m-d", $startDate);
+        $transactions = Transaction::where('time', '>=', $from)->where('time', '<=', $to)->get();
+        for ($i = $time; $i >= 0; $i--) {   
+            if (isset($transactions[$i])) {
+                $transaction = $transactions[$i];
+
+                $date = date("Y-m-d", strtotime($transaction->time));
+                $totals[$date] += floatval($transaction->price);
+            }
+        }
+
+        for ($i = $time - 1; $i >= 0; $i--) {    
+            $date = date("Y-m-d", strtotime('-'.$i.' days', $startDate));
+            $pdate = date("Y-m-d", strtotime('-'.($i+1).' days', $startDate));
+            $totals[$date] += $totals[$pdate];
+        }
+
+        
+        return $totals;
     }
 }

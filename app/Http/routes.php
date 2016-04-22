@@ -25,10 +25,13 @@ Route::group(['middleware' => 'web'], function () {
     });
 
     Route::get('/dashboard', 'MainController@index');
+    Route::get('/dates/{startDate}/{days}', 'MainController@setDates');
     
     Route::post('/account/select/{account}', 'MainController@selectAccount');
     Route::post('/account/add', 'MainController@addAccount');
     Route::post('/account/remove/{account}', 'MainController@removeAccount');
+    
+    Route::post('/history/{category}', 'MainController@showHistory');
     
     Route::post('/budget/add', 'MainController@addBudget');
     Route::post('/budget/remove/{budget}', 'MainController@removeBudget');

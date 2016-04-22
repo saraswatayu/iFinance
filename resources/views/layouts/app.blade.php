@@ -14,11 +14,10 @@
     <!-- Styles -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
-    
+        
     <style>
         body {
             font-family: 'Lato';
-            background: white;
         }
 
         .fa-btn {
@@ -57,14 +56,14 @@
             filter: alpha(opacity=0);
             opacity: 0;
             outline: none;
-            background: white;
+            background: black;
             cursor: inherit;
             display: block;
         }
     </style>
 </head>
     
-<body id="app-layout">
+<body id="app-layout" style="background: black;">
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
@@ -112,6 +111,7 @@
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
     
     <!-- Idle Timer -->
@@ -123,6 +123,66 @@
             $( document ).on( "idle.idleTimer", function(event, elem, obj){
                 document.location.href = '/logout';
             });
+        });
+    </script>
+    
+    <!-- Include Required Prerequisites -->
+<!--    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>-->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.css" />
+
+    <!-- Include Date Range Picker -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+    
+    <script type="text/javascript">
+        $(function() {
+
+            function cb(start, end) {
+                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            }
+            
+            var start = getUrlVars()['start'];
+            if (start) {
+                cb(moment(start, 'Y-M-D').subtract(getUrlVars()['days'], 'days'), moment(start, 'Y-M-D'));
+            } else {
+                cb(moment().subtract(90, 'days'), moment());
+            }
+            
+            var showModal = getUrlVars()['showModal'];
+            if (showModal) {
+                $('#budgetHistoryModal').modal('show');
+            }
+
+            $('#reportrange').daterangepicker({
+                ranges: {
+                   'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                   'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                   'This Month': [moment().startOf('month'), moment().endOf('month')],
+                   'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                maxDate: moment()
+            }, cb);
+
+            $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+                var startDate = picker.startDate;
+                var endDate = picker.endDate;
+                var days = endDate.diff(startDate, 'days');
+                
+                console.log(startDate.format('Y-M-D'));
+                console.log(endDate.format('Y-M-D'));
+                
+                window.location.href = "/dashboard?start=" + endDate.format('Y-M-D') + "&days=" + days;
+            });
+            
+            function getUrlVars() {
+                var vars = {};
+                var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,    
+                function(m,key,value) {
+                  vars[key] = value;
+                });
+                return vars;
+              }
         });
     </script>
 </body>
