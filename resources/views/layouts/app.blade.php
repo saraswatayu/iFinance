@@ -18,7 +18,6 @@
     <style>
         body {
             font-family: 'Lato';
-            background: white;
         }
 
         .fa-btn {
@@ -57,14 +56,14 @@
             filter: alpha(opacity=0);
             opacity: 0;
             outline: none;
-            background: white;
+            background: black;
             cursor: inherit;
             display: block;
         }
     </style>
 </head>
     
-<body id="app-layout">
+<body id="app-layout" style="background: black;">
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">

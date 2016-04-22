@@ -23,6 +23,7 @@
                 display: table;
                 font-weight: 100;
                 font-family: 'Lato';
+                background: black;
             }
 
             .container {
@@ -44,7 +45,7 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">iFinance</div>
+                <div class="title" style="color: white;">iFinance</div>
                 <form method="POST" action="{{ url('/login') }}">
                     {!! csrf_field() !!}
                     
