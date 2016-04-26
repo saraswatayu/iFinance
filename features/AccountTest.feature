@@ -1,21 +1,17 @@
 Feature: Add Account
-    In order to track account of my expenditures
+    In order to track the account of my expenditures
     As a user
-    I want to add my bank accounts to the program
+    I want to view my different assets and types of accounts
 
-    Scenario: Invalid Account Upload
+    Scenario: Accounts Sorted Into Categories
         Given I am logged in
-    	And I attach my file "invalidFile.png" to the "Choose File" section
-    	And I press "Add Account" 
-        Then my account import should fail
+        And I have three accounts
+        Then my accounts should be "Credit Cards", "Savings", and "Loans"
 
-	Scenario: Valid Account Upload
+    Scenario: Accounts Sorted Alphabetically
         Given I am logged in
-        And I attach my file "validFile.png" to the "Choose File" section
-    	And I press "Add Account"
-    	Then the number of items in the "transactions" field should increase by at least one
+        Then my accounts should be sorted alphabetically
 
-    Scenario: Hiding an Account's Transactions
+    Scenario: Proper Account Information
         Given I am logged in
-    	And I uncheck the "visible" checkbox for the "American Express" account
-    	Then the number of items in the "transactions" field should decrease by at least one
+        Then I should see the name, balance, and a butotn to toggle each account 
