@@ -112,7 +112,7 @@ class TransactionRepository
         
         $from = date("Y-m-d", strtotime('-'.$time.' days', $startDate));
         $to = date("Y-m-d", $startDate);
-        $transactions = Transaction::where('time', '>=', $from)->where('time', '<=', $to)->get();
+        $transactions = Transaction::where('time', '>=', $from)->where('account_id', $account->id)->where('time', '<=', $to)->get();
         for ($i = $time; $i >= 0; $i--) {   
             if (isset($transactions[$i])) {
                 $transaction = $transactions[$i];

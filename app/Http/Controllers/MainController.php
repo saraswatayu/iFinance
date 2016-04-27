@@ -70,6 +70,7 @@ class MainController extends Controller
         foreach ($selected as $account) {
             $totals->addNumberColumn($account->name);
         }
+        $totals->addNumberColumn('Net Worth');
 
         $dailyTotals = array();
         foreach ($selected as $account) {
@@ -81,11 +82,14 @@ class MainController extends Controller
             
             $row = array();
             $row[] = $d;
+            $tt = 0;
             foreach ($dailyTotals as $daily) {
                 $row[] = $daily[$d];
+                $tt += $daily[$d];
             }
+            $row[] = $tt;
             
-            $totals->addRow($row);   
+            $totals->addRow($row);
         }
         
         $historyCategory = Input::get('history');
