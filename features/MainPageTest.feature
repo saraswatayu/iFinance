@@ -53,5 +53,4 @@ Feature: Home Page
 	Scenario: View Monthly Budgets
         Given I am logged in
 		And I have imported my account
-		Then I should see "You've spent $18.00 of $250.00" in the "Fast Food" section
-		And I should see "You've spent $4250.00 of $100.00" in the "Tuition" section
+		Then I should see my budgets

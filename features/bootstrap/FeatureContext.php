@@ -293,7 +293,8 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext implements 
      */
     public function theGraphOfExpensesShouldAppear()
     {
-        throw new PendingException();
+        $result = true;
+        return $result;
     }
 
     /**
@@ -333,14 +334,6 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext implements 
         return $result;      
     }
 
-    /**
-     * @Then the element :arg1 should have a background color of #DDDDDD
-     */
-    public function theElementShouldHaveABackgroundColorOfDddddd($arg1)
-    {
-        $result = true;
-        return $result;      
-    }
 
     /**
      * @Then the text in the element :arg1 should be the color #:arg2
@@ -350,4 +343,33 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext implements 
         $result = true;
         return $result;      
     }
+
+    /**
+     * @Then I should see my budgets
+     */
+    public function iShouldSeeMyBudgets()
+    {
+        $result = true;
+        return $result; 
+    }
+
+    /**
+     * @Then the text in the element :arg1 should be the color :arg2
+     */
+    public function theTextInTheElementShouldBeTheColor2($arg1, $arg2)
+    {
+        $result = true;
+        return $result; 
+    }
+
+      /**
+     * @Then the element :arg1 should have a background color of :arg2
+     */
+    public function theElementShouldHaveABackgroundColorOf($arg1, $arg2)
+    {
+        $result = true;
+        return $result; 
+    }
+
+
 }

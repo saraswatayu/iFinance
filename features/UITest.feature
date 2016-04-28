@@ -13,7 +13,7 @@ Feature: UI Test
 
 	Scenario: Correct Background Color for Modules
         Given I am logged in
-        Then the element "panel-body" should have a background color of #DDDDDD
+        Then the element "panel-body" should have a background color of "#DDDDDD"
 
     Scenario: Correct Text Color
         Given I am logged in
