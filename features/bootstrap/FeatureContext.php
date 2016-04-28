@@ -249,7 +249,7 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext implements 
     {
         $result = true;
         return $result;      
-      }
+    }
 
     /**
      * @Given I sort by Category
@@ -286,5 +286,68 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext implements 
         $result = true;
         return $result;   
 
+    }
+
+    /**
+     * @Then the graph of expenses should appear
+     */
+    public function theGraphOfExpensesShouldAppear()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then I should see :arg1 and :arg2
+     */
+    public function iShouldSeeAnd($arg1, $arg2)
+    {
+        $result = true;
+        return $result;      
+    }
+
+
+    /**
+     * @Then I should see the element :arg1
+     */
+    public function iShouldSeeTheElement($arg1)
+    {
+        $result = true;
+        return $result;      
+    }
+
+    /**
+     * @Given I am on the login page
+     */
+    public function iAmOnTheLoginPage()
+    {
+        $result = true;
+        return $result;      
+    }
+
+    /**
+     * @Then the background color should be #:arg1
+     */
+    public function theBackgroundColorShouldBe($arg1)
+    {
+        $result = true;
+        return $result;      
+    }
+
+    /**
+     * @Then the element :arg1 should have a background color of #DDDDDD
+     */
+    public function theElementShouldHaveABackgroundColorOfDddddd($arg1)
+    {
+        $result = true;
+        return $result;      
+    }
+
+    /**
+     * @Then the text in the element :arg1 should be the color #:arg2
+     */
+    public function theTextInTheElementShouldBeTheColor($arg1, $arg2)
+    {
+        $result = true;
+        return $result;      
     }
 }
