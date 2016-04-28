@@ -23,7 +23,7 @@
                 display: table;
                 font-weight: 100;
                 font-family: 'Lato';
-                background: black;
+                background: #333333;
             }
 
             .container {

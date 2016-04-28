@@ -63,7 +63,7 @@
     </style>
 </head>
     
-<body id="app-layout" style="background: black;">
+<body id="app-layout" style="background: #333333;">
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
