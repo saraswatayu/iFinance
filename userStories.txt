@@ -1,0 +1,49 @@
+//Login
+As a user, I should be able to login to the application using my own credentials, providing that my account has been registered
+
+//Accounts
+As a user, I should be able to import my account details by attaching a .CSV file containing my account information
+
+As a user, I should be able to see a list of all my credit cards and the balances associated with each credit card
+
+As a user, I should be able to track my credit cards, savings, and loans
+
+As a user, I should be able to toggle which accounts I see on the graph
+
+As a user, I should be able to remove accounts
+
+
+//Budgets
+As a user, I should be able to set and view budgets for categories of my choosing, with names and spending limits
+
+As a user, I should be able to see how much I have spent in my budget, with color indicators to show if I have spent more, less, or as much as my budget allows
+
+As a user, I should be able to remove budgets that I have set
+
+As a user, I should be able to toggle which budgets I see on the graph
+
+//Graph
+As a user, I should be able to see how my accounts and budgets change in spending over a date range
+
+As a user, I should be able to specify the date range using a calendar widget that includes a start and end date
+
+As a user, I should be able to see which accounts and budgets are being graphed using a legend provided with the graph
+
+As a user, I should be able to see multiple accounts and budgets denoted by multiple colors
+
+As a user, I should be able to select specific points on the graphs and see spending at that point in time and the date
+
+//Transactions
+As a user, I should be able to see the name of my transactions, the category, price and time
+
+As a user, I should be able to sort my transactions by Merchant, Category, Price, or Time
+
+As a user, I should be able to view multiple pages of transactions if I have many transactions
+
+
+//Logout
+As a user, I should be able to manually log out of the platform
+
+As a user, I should be automatically logged out after 2 minutes of inactivity
+
+
