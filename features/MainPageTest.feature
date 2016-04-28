@@ -6,7 +6,7 @@ Feature: Home Page
     Scenario: Automatic Logout
         Given I am logged in
     	And I am idle for two minutes
-		Then I should be sent to the login page
+		Then I should remain on the homepage
 
     Scenario: Intentional Logout
         Given I am logged in
